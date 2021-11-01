@@ -36,6 +36,8 @@ for i in row:
     init_train_data.loc[n] = train_data1
     # 下一类污染物
     n += 1
+
+train_array = np.array(init_train_data).astype(float)
 # 测试输出
 # print(init_train_data)
 #      0      1      2      3       4     ...    5755    5756    5757    5758    5759
@@ -45,4 +47,28 @@ for i in row:
 # [18 rows x 5760 columns]
 
 # 3.处理训练集
+# 训练样本features集合
+X_train = []
+# 训练样本目标PM2.5集合
+y_train = []
+for i in range(init_train_data.shape[1] - 9):
+    # 每次取9个小时的数据作为训练集
+    # 每次数据遍历每行前九个数据，全部加入到训练集中，18*19
+    X_temp = np.ones
+    # 记录
+    count = 0
+    for j in range(18):
+        x = train_array[j, i:i + 9]
+        for k in range(9):
+            X_temp[count] = x[k]
+            count += 1
+    # 将样本分别存入X_train中
+    X_train.append(X_temp)
 
+    # 取本次第10个小时的PM2.5的值作为训练的真实值
+    y = int(train_array[9, i + 9])
+    # 取样本分别存入X_train,y_train
+    y_train.append(y)
+
+X_train = np.array(X_train)
+y_train = np.array(y_train)
