@@ -54,7 +54,7 @@ y_train = []
 for i in range(init_train_data.shape[1] - 9):
     # 每次取9个小时的数据作为训练集
     # 每次数据遍历每行前九个数据，全部加入到训练集中，18*19
-    X_temp = np.ones
+    X_temp = np.ones(18 * 9)
     # 记录
     count = 0
     for j in range(18):
@@ -70,5 +70,19 @@ for i in range(init_train_data.shape[1] - 9):
     # 取样本分别存入X_train,y_train
     y_train.append(y)
 
+# 测试输出
+# print(type(y_train))
+# 输出为：list
 X_train = np.array(X_train)
 y_train = np.array(y_train)
+# 测试输出
+# print(type(y_train))
+# 输出为:numpy.ndarray
+
+# 4.实现线性回归
+# 训练轮数
+epoch = 2000
+# 更新参数、训练模型
+# 初始化偏置值
+bias=0
+
