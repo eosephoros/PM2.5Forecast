@@ -84,5 +84,15 @@ y_train = np.array(y_train)
 epoch = 2000
 # 更新参数、训练模型
 # 初始化偏置值
-bias=0
-
+bias = 0
+# 设置权重
+weights = np.ones(18 * 9)
+# 初始学习率
+learning_rate = 1
+# 存放偏置值的梯度平方和
+bg2_sum = 0
+# 存放权重的平方和
+wg2_sum = 0
+for i in range(epoch):
+    b_g = 0
+    w_g = 0
