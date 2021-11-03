@@ -94,5 +94,37 @@ bg2_sum = 0
 # 存放权重的平方和
 wg2_sum = 0
 for i in range(epoch):
+    print(i)
     b_g = 0
-    w_g = 0
+    w_g = np.zeros(18 * 9)
+    # 在所有数据上计算Loss_label的梯度
+    for j in range(len(X_train)):
+        b_g += (y_train[j] - weights.dot(X_train[j]) - bias) * (-1)
+        for k in range(18 * 9):
+            w_g[k] += (y_train[j] - weights.dot(X_train[j]) - bias) * (-X_train[j, k])
+        # 求平均
+    b_g /= len(X_train)
+    w_g /= len(X_train)
+
+    # adagrade
+    bg2_sum += b_g ** 2
+    wg2_sum += w_g ** 2
+
+    # 更新权重和偏重
+    bias -= learning_rate / bg2_sum ** 0.5 * b_g
+    weights -= learning_rate / wg2_sum ** 0.5 * w_g
+
+    # 每训练200轮，输出一次在训练集上的损失
+    if i % 200 == 0:
+        loss = 0
+        for j in range(len(X_train)):
+            loss += (y_train[j] - weights.dot(X_train[j]) - bias) ** 2
+        print('after {} epochs, the loss on train data is : '.format(i), loss / len(X_train))
+
+# 5.存储模型
+np.save('model_weight.npy', weights)
+np.save('model_bias.npy', bias)
+
+# 读取模型
+w = np.load('model_weight.npy')
+b = np.load('model_bias.npy')
